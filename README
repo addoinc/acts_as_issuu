@@ -1,0 +1,78 @@
+What is acts_as_issuu?
+=====================
+
+acts_as_issuu is a plugin for Issuu API(http://issuu.com/services/api/). With this plugin you can upload documents to Issuu from Rails applicaiton. 
+
+acts_as_issuu functionality
+===========================
+
+acts_as_issuu facilitates document uploads from your rails application to Issuu(http://issuu.com/). 
+
+This plugin will extend active record models by adding handy callbacks(upload_doc_to_issuu, delete_doc_from_issuu).
+
+
+Prerequisites
+=============
+
+Install hpricot, mime-types gems 
+
+Step by step instructions for integration with Rails Application
+=============================================================== 
+
+1) Register on Issuu and add issuu configurations(issuu.yml) file into your rails application.
+
+Example:
+
+File: issuu_demo_app/config/issuu.yml
+     
+apiKey: h14oprr140rqrhbg2g9od64tl5s59pln  # Issuu API key
+secret: tyqkkgqprhd8xhgr2pijo4snmmir9srh  # Issuu API secret
+user: darklord                            # Issuu username
+access: private                           # Issuu document access type(public/private)
+
+2) Make your model acts_as_issuu
+
+Example:
+
+File: issuu_demo_app/app/models/attachment.rb
+
+class Attachment < ActiveRecord::Base
+
+  acts_as_issuu	'AttachmentFu'  # If you are using paperclip for fileupload, pass argument as 'Paperclip' 
+end
+
+3) acts_as_issuu migrations
+
+Add Issuu fields(issuu_docId, issuu_name, issuu_title) for the target model.
+
+Example:
+
+class AddIssuuToDocument < ActiveRecord::Migration
+  def self.up
+    add_column :attachments, :issuu_docId, :string
+    add_column :attachments, :issuu_name, :string
+    add_column :attachments, :issuu_title, :string
+  end
+end
+
+
+That's it, now your attachments model will upload documents to Issuu.com
+
+
+Future Updates
+==============
+
+> Adding Test Cases
+
+> Support for Issuu Search API
+
+> Support organising bookmarks, folders on Issuu
+
+
+Mailing Address
+===============
+
+If you have any queries/comments, please leave a messsage to raghuram@azrisolutions.com
+
+
+Copyright (c) 2011 Raghu Ram G, released under the MIT license
